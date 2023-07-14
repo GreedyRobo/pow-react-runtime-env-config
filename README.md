@@ -8,11 +8,15 @@ TBD
 
 TBD
 
-#### Why config can be saved in `src` folder?
+#### Why config can't be saved in `src` folder?
 
 TBD
 
 #### Why you can't import config from public folder?
+
+TBD
+
+#### How to run?
 
 TBD
 
