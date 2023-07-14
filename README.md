@@ -1,5 +1,7 @@
 Stack: React, Typescript, Vite
 
+TODO:: .gitignore `dist` folder
+
 # Why?
 
 TBD
