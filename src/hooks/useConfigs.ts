@@ -1,31 +1,63 @@
 import {useEffect, useState} from "react";
 
-// interface ICache {
-//     value: Record<string, string> | null
-// }
-//
-// const cache: ICache = {value: null}
+const CACHE_KEY = 'ENV-CONFIG'
 
 export const useConfigs = () => {
     const [configs, setConfigs] = useState<{value: RuntimeEnvConfig  | null}>({value: null})
 
     const [fetchCount, setFetchCount] = useState(0);
 
-    useEffect(() => {
-        console.debug('Getting configs...')
+    const [loading, setLoading] = useState(false)
 
-        if(configs.value) {
-            console.debug('Cache value exists...')
+    const initConfig = async () => {
+        const CACHE_URL = new URL('/config.json', window.location.href)
+
+        console.debug(`Config url constructed: ${CACHE_URL.href}`)
+
+        const cache = await caches.open(CACHE_KEY)
+
+        const response = await cache.match(CACHE_URL);
+
+        console.debug('Checking cache..')
+
+        if(response){
+            console.debug('Cache exists...')
+            const content = await response.json() as RuntimeEnvConfig;
+
+            console.debug('Saved configs: ', content)
+
+            setConfigs({value: content})
             return;
         }
 
+        console.debug('Cache not found...')
+
         console.debug('Fetching configs...')
-        //TODO::Fetch request
+
+        const newResponse = await fetch(CACHE_URL)
+
         setFetchCount((prev) => prev + 1)
 
-        setConfigs({value: {APP_TITLE: "config1"}})
+        console.debug('Saving response to cache...')
 
-    }, [configs.value])
+        await cache.put(CACHE_URL, newResponse)
 
-    return {configs: configs.value, fetchCount}
+        const content = await newResponse.json() as RuntimeEnvConfig;
+
+        console.debug('Configs fetched: ', content)
+
+        setConfigs({value: content})
+    }
+
+    useEffect(() => {
+        console.debug('Starting config setup...')
+
+        setLoading(true)
+
+        initConfig().finally(() => {
+            setLoading(false)
+        })
+    }, [])
+
+    return {configs: configs.value, fetchCount, loading}
 }
