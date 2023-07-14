@@ -1,10 +1,13 @@
 import './App.css'
-import {ConfigContext, DEFAULT_VALUE} from "./contexts";
+import {ConfigContext} from "./contexts";
 import {Table} from "./components";
+import {useConfigs} from "./hooks";
 
 function App() {
+    const {configs, fetchCount, loading} = useConfigs()
+
     return (
-        <ConfigContext.Provider value={DEFAULT_VALUE}>
+        <ConfigContext.Provider value={{configs, fetchCount, loading}}>
             <Table/>
         </ConfigContext.Provider>
     )

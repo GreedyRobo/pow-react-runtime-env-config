@@ -1,13 +1,12 @@
 import { createContext } from 'react';
 
 interface IContext {
-    configs: RuntimeEnvConfig | null
+    configs?: RuntimeEnvConfig
     loading: boolean
     fetchCount: number
 }
 
 export const DEFAULT_VALUE: IContext = {
-    configs: null,
     loading: false,
     fetchCount: 0
 }

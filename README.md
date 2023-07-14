@@ -1,5 +1,7 @@
 Stack: React, Typescript, Vite
 
+TODO:: Joi validation based on type
+
 # Why?
 
 TBD
