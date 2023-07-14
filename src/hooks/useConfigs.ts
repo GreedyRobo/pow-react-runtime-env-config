@@ -1,4 +1,9 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
+import Joi from 'joi'
+
+const SCHEMA = Joi.object<RuntimeEnvConfig, true>({
+    APP_TITLE: Joi.string().required()
+}).options({allowUnknown: true, presence: 'required' })
 
 export const useConfigs = () => {
     const [configs, setConfigs] = useState<RuntimeEnvConfig>()
@@ -7,7 +12,9 @@ export const useConfigs = () => {
 
     const [loading, setLoading] = useState(false)
 
-    const initConfig = async () => {
+    const [failed, setFailed] = useState(false)
+
+    const initConfig = useCallback(async () => {
         const CONFIG_URL = new URL('/config.json', window.location.href)
 
         console.debug(`Config url constructed: ${CONFIG_URL.href}`)
@@ -24,8 +31,18 @@ export const useConfigs = () => {
 
         console.debug('Values fetched: ', content)
 
+        console.debug("Validating values...")
+
+        const {error} = SCHEMA.validate(content)
+
+        if(error) {
+            console.debug("Invalid config...")
+            setFailed(true);
+            return;
+        }
+
         setConfigs(content)
-    }
+    }, [])
 
     useEffect(() => {
         console.debug('Starting config setup...')
@@ -35,7 +52,7 @@ export const useConfigs = () => {
         initConfig().finally(() => {
             setLoading(false)
         })
-    }, [])
+    }, [initConfig])
 
-    return {configs, fetchCount, loading}
+    return {configs, fetchCount, loading, failed}
 }
