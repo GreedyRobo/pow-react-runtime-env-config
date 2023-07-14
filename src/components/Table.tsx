@@ -2,7 +2,7 @@ import {useContext} from "react";
 import {ConfigContext} from "../contexts";
 
 export const Table = () => {
-    const {loading, configs, fetchCount} = useContext(ConfigContext)
+    const {loading, configs, fetchCount, failed} = useContext(ConfigContext)
 
     return (
         <div>
@@ -11,6 +11,10 @@ export const Table = () => {
                 <tr>
                     <td>Loading:</td>
                     <td>{loading ? 'YES' : 'NO'}</td>
+                </tr>
+                <tr>
+                    <td>Failed:</td>
+                    <td>{failed ? 'YES' : 'NO'}</td>
                 </tr>
                 <tr>
                     <td>Fetch count:</td>

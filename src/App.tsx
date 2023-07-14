@@ -4,10 +4,10 @@ import {Table} from "./components";
 import {useConfigs} from "./hooks";
 
 function App() {
-    const {configs, fetchCount, loading} = useConfigs()
+    const {configs, fetchCount, loading, failed} = useConfigs()
 
     return (
-        <ConfigContext.Provider value={{configs, fetchCount, loading}}>
+        <ConfigContext.Provider value={{configs, fetchCount, loading, failed}}>
             <Table/>
         </ConfigContext.Provider>
     )
