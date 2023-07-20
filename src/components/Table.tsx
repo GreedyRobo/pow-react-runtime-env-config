@@ -1,5 +1,5 @@
 import {useContext} from "react";
-import {ConfigContext} from "../contexts";
+import {ConfigContext} from "../features";
 
 export const Table = () => {
     const {loading, configs, fetchCount, failed} = useContext(ConfigContext)

@@ -7,7 +7,7 @@ interface IContext {
     fetchCount: number
 }
 
-export const DEFAULT_VALUE: IContext = {
+const DEFAULT_VALUE: IContext = {
     loading: false,
     failed: false,
     fetchCount: 0

@@ -1,9 +1,5 @@
 Stack: React, Typescript, Vite
 
-TODO:: .gitignore `dist` folder
-TODO:: move hook to context
-TODO:: consider wrap functionality to be HOC
-
 # Why?
 
 TBD
