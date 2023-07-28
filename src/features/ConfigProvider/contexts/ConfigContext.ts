@@ -1,5 +1,7 @@
 import { createContext } from 'react';
 
+import type {RuntimeEnvConfig} from "../types"
+
 interface IContext {
     configs?: RuntimeEnvConfig
     loading: boolean

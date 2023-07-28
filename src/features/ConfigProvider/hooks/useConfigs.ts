@@ -1,6 +1,8 @@
 import {useCallback, useEffect, useState} from "react";
 import Joi from 'joi'
 
+import type {RuntimeEnvConfig} from "../types"
+
 const SCHEMA = Joi.object<RuntimeEnvConfig, true>({
     APP_TITLE: Joi.string().required()
 }).options({allowUnknown: true, presence: 'required' })

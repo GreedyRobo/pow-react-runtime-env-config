@@ -1,7 +1,5 @@
 Stack: React, Typescript, Vite
 
-TODO::Move interface from vite-env.d.ts
-
 # Why?
 
 Idea behind this is single build to multiple environments. This way we are more consistent with our dependencies as we are making sure that same code from node_modules is running in different environments. If we build app for `staging` and then after some time try to build for `production` we usually skip automatic testing as it was done before building `staging` app. However, there might be a case that dependency package been updated/patched and now behaviour of it might be different. That is why we need single build, but it comes with problem that we can't set `process.env` per environment as we have only single docker image. To solve this issue we are testing this runtime config approach. Which allows us with kubernetes help mount different `config.json` per environment and have those values inside app.
